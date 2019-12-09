@@ -1,35 +1,35 @@
 # Projekt Datalagring IV1351 (Java delen)
-## Översikt över vilka filer som finns i projektet
-- App.java
+## Kortfattad översikt
+- **App.java**
     - Det här är den enda filen som man behöver jobba med för att uppnå A-nivå.
     - Alla uppgifter är lösta i den här filen.
-- AbstractApp.java
+- **AbstractApp.java**
     - En abstrakt basklass till *App.java*.
     - Gömmer funktionalitet som *App.java* inte behöver se.
-- Button.Java, Colors.Java, Label.Java, TextField.java
+- **Button.Java, Colors.Java, Label.Java, TextField.java**
     - Filer som endast skapades för att designen skulle bli lite bättre.
     - Dessa filer har ingenting med funktionaliteten att göra, de fyller endast ett estetiskt värde.
-- Table.Java
-    - Den här klassen har en viktig metod som man anropar från *App.java* vilket är ```Java void setTableContent(ResultSet rs)```.
-- Presentation.Java
+- **Table.Java**
+    - Den här klassen har en viktig metod som man anropar från *App.java* vilket är ```java void setTableContent(ResultSet rs)```.
+- **Presentation.Java**
     - Tanken var att bygga en API som skulle göra det lättare att lösa uppgifter i *App.java*.
     - Resultatet blev *Presentation.java*.
     - Man kan se den här klassen som en samling av slides (Med slides menar jag sådana som finns i en PowerPoint presentation).
     - Ett objekt av typen *Presentation* kan innehålla många objekt av typerna *FormSlide*, *TableSlide* och *TextSlide*.
-    - Ett objekt av typen *Presentation* kan bläddra fram och tillbaka mellan slides med hjälp av metoderna ```Java void next()``` och ```Java void previous()```.
-    - För att avsluta en presentation anropas ```Java void stop()```.
-- FormSlide.Java
+    - Ett objekt av typen *Presentation* kan bläddra fram och tillbaka mellan slides med hjälp av metoderna ```java void next()``` och ```java void previous()```.
+    - För att avsluta en presentation anropas ```java void stop()```.
+- **FormSlide.Java**
     - Det här är en slide som innehåller ett formulär där användaren kan mata in information i olika textfält.
     - Den här klassen används tillsammans med *Presentation*.
-    - För att lägga till ett textfält anropas ```Java void addField(String id, String description)```.
-    - För att få värdet som användaren matat in anropas ```Java String getFieldValue(String id)```.
-- TableSlide.Java
-    - Det här är en slide som innehåller en tabell och används i samband med ```Java ResultSet executeQuery(String query)``` för att på ett snyggt sätt synliggöra ett ResultSet objekt.
+    - För att lägga till ett textfält anropas ```java void addField(String id, String description)```.
+    - För att få värdet som användaren matat in anropas ```java String getFieldValue(String id)```.
+- **TableSlide.Java**
+    - Det här är en slide som innehåller en tabell och används i samband med ```java ResultSet executeQuery(String query)``` för att på ett snyggt sätt synliggöra ett ResultSet objekt.
     - Den här klassen används tillsammans med *Presentation*.
-- TableSlide.Java
+- **TableSlide.Java**
     - Det här är den lättaste sliden som endast innehåller lite text.
     - Den här klassen används tillsammans med *Presentation*.
-- NameUpdater.Java och TableUpdater.java
+- **NameUpdater.Java och TableUpdater.java**
     - Det här är två interfaces som innehåller varsin metod som används som callback.
     - *NameUpdater* används för att hålla slide namn uppdaterade.
     - *TableUpdater* används för att hålla tabellen i *TableSlide* uppdaterad.
