@@ -142,3 +142,81 @@ Det sista steget för att vår lösning ska vara komplett är att meddelande sup
 ```java
 addMenuButton("Visa föreningar", presentation);
 ```
+
+Nu är vi klara! Här nedanför finns hela koden samt en bild på hur fönstret ska se ut efter man har skrivit den här koden.
+```java
+package com.bostadbäst;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class App extends AbstractApp {
+
+	// Information om fönstrets titel och storlek.
+	private static final String TITLE = "BostadBäst";
+	private static final int WIDTH = 920;
+	private static final int HEIGHT = 760;
+
+	// Information om databas anslutningen.
+	private static final String URL = "jdbc:mysql://localhost/bostadbästdb";
+	private static final String USERNAME = "test";
+	private static final String PASSWORD = "123456789";
+
+	// Objektet som upprättar en anslutning med en databas.
+	private Connection conn;
+
+	public App() {
+		super(TITLE, WIDTH, HEIGHT);
+	}
+
+	@Override
+	protected void setup() {
+		try {
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		visaAllaFöreningar();
+    }
+    
+    private void visaAllaFöreningar()
+    {
+   		Presentation presentation = new Presentation("Visa alla föreningar");
+
+		TableSlide table = new TableSlide();
+		table.setName(() -> "Här nedanför i tabellen står alla föreningar");
+
+		table.setTable((t) -> {
+			try(Statement s = conn.createStatement())
+			{
+				ResultSet rs = s.executeQuery("SELECT * FROM förening");
+				t.setTableContent(rs);	// Här sätter vi att tabellen ska innehålla informationen från rs.
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		});
+		table.addButton("Stäng", Color.WHITE, Colors.RED, e -> presentation.stop());
+		presentation.add(table);
+		addMenuButton("Visa föreningar", presentation);
+    }
+
+	// Här börjar applikationen.
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new App();
+			}
+		});
+	}
+}
+```
