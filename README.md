@@ -220,3 +220,5 @@ public class App extends AbstractApp {
 	}
 }
 ```
+Men den här koden i **App.java** kommer applikationen se ut som i bilden nedanför.
+![bostadbäst](https://user-images.githubusercontent.com/42449446/70481153-03636c80-1ae2-11ea-8ba7-769bca1cadeb.PNG)
