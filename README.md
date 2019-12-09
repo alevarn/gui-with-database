@@ -78,12 +78,12 @@ public class App extends AbstractApp {
 		}
 
 		visaAllaFöreningar();
-    }
+        }
     
-    private void visaAllaFöreningar()
-    {
-        // Här ska vi lösa uppgiften.
-    }
+        private void visaAllaFöreningar()
+        {
+            // Här ska vi lösa uppgiften.
+        }
 
 	// Här börjar applikationen.
 	public static void main(String[] args) {
@@ -185,10 +185,10 @@ public class App extends AbstractApp {
 		}
 
 		visaAllaFöreningar();
-    }
+        }
     
-    private void visaAllaFöreningar()
-    {
+        private void visaAllaFöreningar()
+        {
    		Presentation presentation = new Presentation("Visa alla föreningar");
 
 		TableSlide table = new TableSlide();
@@ -207,7 +207,7 @@ public class App extends AbstractApp {
 		table.addButton("Stäng", Color.WHITE, Colors.RED, e -> presentation.stop());
 		presentation.add(table);
 		addMenuButton("Visa föreningar", presentation);
-    }
+        }
 
 	// Här börjar applikationen.
 	public static void main(String[] args) {
