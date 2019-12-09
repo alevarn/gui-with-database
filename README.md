@@ -35,7 +35,7 @@
     - *TableUpdater* används för att hålla tabellen i *TableSlide* uppdaterad.
 ## Ett exempel
 För att visa hur koden fungerar går vi igenom ett exempel. Vi väljer att lösa den första uppgiften där man ska **Visa alla föreningar**.
-I filen **App.java** ser ut så här:
+I filen **App.java** har jag tagit bort mycket kod så det enda vi har är det som står här nedanför. Det är en minimalistisk **App.java**. Det enda vi behöver göra är att lägga till kod i metoden ```void setup()```, men jag har valt att skriva en metod som anropas från ```void setup()``` istället eftersom det gör att metoden ```void setup()``` inte blir för lång. Vi skriver alltså lösningen till uppgiften i metoden ````void visaAllaFöreningar()```.
 
 ```java
 package com.bostadbäst;
@@ -95,6 +95,50 @@ public class App extends AbstractApp {
 		});
 	}
 }
+```
 
+Det vi börjar med är att skapa en ny presentation och döper den till "Visa alla föreningar".
+```java
+Presentation presentation = new Presentation("Visa alla föreningar");
+```
+Eftersom vi endast är intresserade av att visa en tabell för användaren (som innehåller alla föreningar) är den enda typen av *Slide* vi kommer behöva *TableSlide*. Vi skapar därför ett objekt av typen *TableSlide* och ger den namnet "Här nedanför i tabellen står alla föreningar".
+```java
+Presentation presentation = new Presentation("Visa alla föreningar");
 
+TableSlide table = new TableSlide();
+table.setName(() -> "Här nedanför i tabellen står alla föreningar");
+```
+Notera nu att det är ett lambda uttryck (arrow function) som argument i metoden *setName*. Anledningen till detta är eftersom metoden tar in ett objekt av typen *NameUpdater*. *NameUpdater* är ett interface som har **EN** metod i sig som returnerar en String. Anledningen till att man måste mata in en callback-metod här i form av ett lambda uttryck eller en anonym klass eller liknande är p.g.a. att då kan presentation objektet se till att namnet hela tiden är uppdaterat (vilket bara spelar roll ifall namnet kan förändras, vilket det inte gör i vårt fall). Du kommer snart se att vi även använder lambda uttryck när vi skapar vår tabell också (vi gör detta av exakt samma skäll d.v.s. ifall databasen ändras måste vi se till att Java applikationen också är uppdaterad).
+
+Vi har kommit så långt att vi har ett *Presentation* objekt med en titel och ett *TableSlide* objekt med ett namn. Det vi ska göra nu är att faktiskt be databasen att hämta alla föreningar genom att köra SQL-förfrågan "SELECT * FROM förening". Vi ska sedan lägga in resultatet i vår tabell så användaren kan se alla föreningar.
+```java
+Presentation presentation = new Presentation("Visa alla föreningar");
+
+TableSlide table = new TableSlide();
+table.setName(() -> "Här nedanför i tabellen står alla föreningar");
+
+table.setTable((t) -> {
+	try(Statement s = conn.createStatement())
+	{
+		ResultSet rs = s.executeQuery("SELECT * FROM förening");
+		t.setTableContent(rs);	// Här sätter vi att tabellen ska innehålla informationen från rs.
+	}catch(SQLException e)
+	{
+		e.printStackTrace();
+	}
+});
+```
+Nu har vi en tabell som innehåller allting som finns i ResultSet objektet. Det skulle vara trevligt att lägga till en knapp som stänger ner hela presentationen (om man känner att man inte längre orkar tittat på tabellen). Detta gör vi med en enda rad kod.
+```java
+table.addButton("Stäng", Color.WHITE, Colors.RED, e -> presentation.stop());
+```
+Nu återstår bara två saker kvar att göra. Det första är väldigt enkelt och är att se till så att *Presentation* objektet vet att den har en slide vilket vi gör genom att anropa metoden *add*. 
+```java
+presentation.add(table);
+```
+Det är möjligt att lägga på oändligt många slides (men i exemplet använder vi endast en). Vid senare uppgifter där man till exempel ska **Visa alla hus i en förening** och användaren ska själv mata in föreningens organisationsnummer blir det aktuellt att kombinera en *TableSlide* och en *FormSlide* för att kunna få input från användaren.
+
+Det sista steget för att vår lösning ska vara komplett är att meddelande superklassen **AbstractApp** att vi har en presentation som vi gärna vill visa när användaren klickar på en knapp i menyn. Det här gör vi väldigt enkelt genom att anropa metoden *addMenuButton*.
+```java
+addMenuButton("Visa föreningar", presentation);
 ```
