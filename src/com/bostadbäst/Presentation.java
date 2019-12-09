@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  * En presentation består av flera {@code Slide} objekt. En presentation kan gå
- * fram och tillbaka mellan slides (likna detta med en Powerpoint presentation).
+ * fram och tillbaka mellan slides (likna detta med en PowerPoint presentation).
  * Varje presentation har en titel och varje slide har sitt egna namn och sitt
  * egna innehåll. En slide kan till exempel innehålla ett formulär se
  * {@code FormSlide} eller en tabell se {@code TableSlide}.

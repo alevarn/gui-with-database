@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Det är i den här klassen som vi löser alla uppgifter och den ENDA klassen som
+ * man behöver modifiera för att lösa fler SQL relaterade problem.
+ */
 public class App extends AbstractApp {
 
 	// Information om fönstrets titel och storlek.
