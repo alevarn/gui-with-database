@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -36,6 +38,11 @@ public abstract class AbstractApp {
 		initializeComponents();
 		setup();
 		frame.setVisible(true);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				cleanup();
+			}});
 	}
 
 	/**
@@ -44,6 +51,13 @@ public abstract class AbstractApp {
 	 * {@code App} ska sätta upp knappar och presentationer här.
 	 */
 	protected abstract void setup();
+
+	/**
+	 * Den här metoden implementeras av {@code App} och anropas precis innan
+	 * applikationen avslutas. Syftet med metoden är att klassen {@code App}
+	 * ska kunna utföra logik precis innan applikationen stängs ner (exempelvis stänga öppna anslutningar).
+	 */
+	protected abstract void cleanup();
 
 	/**
 	 * Lägger till en ny knapp och associerar den med en presentation som startas
@@ -80,7 +94,8 @@ public abstract class AbstractApp {
 		});
 	}
 
-	// Den här metoden sätter upp den grafiska användargränssnittet som användaren ska se.
+	// Den här metoden sätter upp den grafiska användargränssnittet som användaren
+	// ska se.
 	private void initializeComponents() {
 		top.setBackground(Colors.SNOW);
 		menu.setBackground(Color.WHITE);
@@ -142,7 +157,7 @@ public abstract class AbstractApp {
 		c.weightx = 0;
 		c.weighty = 0;
 		c.gridwidth = 1;
-		footer.add(new Label("Alexander Astely, Alexander Danielson, Marcus Alevärn © 2019-12-07", 12), c);
+		footer.add(new Label("Alexander Astély, Alexander Danielson, Marcus Alevärn © 2019-12-07", 12), c);
 		c.ipady = 0;
 
 		c.fill = GridBagConstraints.HORIZONTAL;

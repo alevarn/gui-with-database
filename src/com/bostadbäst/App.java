@@ -43,12 +43,14 @@ public class App extends AbstractApp {
 		super(TITLE, WIDTH, HEIGHT);
 	}
 
+	// Den här metoden anropas innan fönstret visas.
 	@Override
 	protected void setup() {
 		try {
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.exit(-1);	// Om vi inte kunde ansluta till DBMS avsluta då programmet!
 		}
 
 		// Dessa metoder ger lösningarna för alla uppgifter upp till B-nivå.
@@ -62,6 +64,16 @@ public class App extends AbstractApp {
 
 		// Lägg till egna metoder för A-nivå här.
 
+	}
+
+	// Den här metoden anropas innan fönstret stängs ner.
+	@Override
+	protected void cleanup() {
+		try {
+			conn.close(); // Vi stänger anslutningen.
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
