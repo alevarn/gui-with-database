@@ -22,7 +22,7 @@ public class App extends AbstractApp {
 
 	// Information om databas anslutningen.
 	private static final String URL = "jdbc:mysql://localhost/bostadbästdb";
-	private static final String USERNAME = "test";
+	private static final String USERNAME = "example";
 	private static final String PASSWORD = "123456789";
 
 	private Connection conn;
